@@ -1,80 +1,72 @@
-# Chrome Extension: React + TypeScript + Vite
+# Chrome Extension with React, TypeScript, and Vite
 
-This is a minimal boilerplate for building a **Chrome Extension** using **React**, **Vite**, and **TypeScript**. It includes a popup UI that displays a simple `"Hello World"` message.
+This repository is the runnable companion to ARG Software's guide to building a Manifest V3 Chrome extension with React and Vite.
 
-## 🚀 Features
+It demonstrates:
 
-- Manifest v3 support
-- React + TypeScript with Vite
-- Ready to expand with extension features (content scripts, background workers, etc.)
+- A React popup built with TypeScript and Vite
+- A statically declared content script
+- Typed messaging between the popup and content script
+- An event-driven extension service worker
+- Bounded local storage that only records a page after a user action
+- Explicit controls to inspect and clear saved pages
 
-## 🛠️ Getting Started
+## Requirements
 
-### 1. Install dependencies
+- Node.js 20.11 or newer
+- Google Chrome or another Chromium browser with Manifest V3 support
+
+## Install
 
 ```bash
 npm install
 ```
 
-### 2. Run in development mode
+## Development
 
 ```bash
 npm run dev
 ```
 
-This builds the extension to the `dist` folder and watches for changes.
+The development command rebuilds the extension into `dist/` whenever a source file changes. In `chrome://extensions/`, enable Developer mode, choose **Load unpacked**, and select the `dist/` directory. Reload the extension from that page after a rebuild.
 
-### 3. Build for production
+Chrome does not inject content scripts into browser-internal pages such as `chrome://extensions/`. Open a regular HTTP or HTTPS page when testing the popup actions.
+
+## Production Build
 
 ```bash
 npm run build
 ```
 
-### 4. Load in Chrome
+The output in `dist/` contains the popup bundle, manifest, content script, service worker, and icons required by Chrome.
 
-- Open `chrome://extensions/`
-- Enable **Developer mode**
-- Click **Load unpacked**
-- Select the `dist/` folder
+## Verification
 
----
-
-## 📁 Folder Structure
-
-```
-├── public/
-│   ├── manifest.json      # Chrome extension manifest (v3)
-│   ├── icon16.png         # Extension icon
-│   ├── icon48.png
-│   └── icon128.png
-├── src/
-│   ├── App.tsx            # Popup UI component
-│   ├── main.tsx           # Entry point
-│   └── index.css          # (Optional) Basic styling
-├── index.html             # Injected as the extension popup
-├── vite.config.ts         # Vite configuration
-├── tsconfig.json
-└── README.md
+```bash
+npm run verify
 ```
 
----
+This runs ESLint, TypeScript, the production build, and structural tests against the generated extension package.
 
-## 🧩 Manifest Overview
+## Privacy
 
-The extension uses **Manifest v3** with a single popup UI:
+The example does not monitor tab changes or silently collect browsing history. A URL and title are stored locally only after the user reads the current page and selects **Save page**. The extension keeps at most ten entries and exposes a **Clear** action.
 
-```json
-{
-  "manifest_version": 3,
-  "name": "Hello World Extension",
-  "version": "1.0",
-  "action": {
-    "default_popup": "index.html"
-  }
-}
+If you publish a derivative extension, narrow the content-script match patterns to the sites the feature needs and provide the disclosures required by the Chrome Web Store policies.
+
+## Structure
+
+```text
+public/
+  background.js
+  content-script.js
+  manifest.json
+src/
+  App.tsx
+  main.tsx
+tests/
+  extension-package.test.mjs
 ```
-
----
 
 ## License
 
