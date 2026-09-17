@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Chrome extension Boilerplate",
+  "name": "React Vite Extension Boilerplate",
   "version": "1.0",
-  "description": "Chrome extension React and Vite Boilerplate",
+  "description": "A Chrome extension example built with React, TypeScript, and Vite",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
@@ -11,7 +11,16 @@
       "128": "icon128.png"
     }
   },
-  "permissions": [],
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content-script.js"]
+    }
+  ],
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
