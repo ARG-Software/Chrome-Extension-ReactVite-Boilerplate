@@ -13,7 +13,7 @@ It demonstrates:
 
 ## Requirements
 
-- Node.js 20.11 or newer
+- Node.js 20.19 or newer, or Node.js 22.13 or newer
 - Google Chrome or another Chromium browser with Manifest V3 support
 
 ## Install
@@ -46,7 +46,7 @@ The output in `dist/` contains the popup bundle, manifest, content script, servi
 npm run verify
 ```
 
-This runs ESLint, TypeScript, the production build, and structural tests against the generated extension package.
+This lints the source and shipped scripts, type-checks the TypeScript, creates the production build, and runs smoke tests against the generated extension package.
 
 ## Privacy
 

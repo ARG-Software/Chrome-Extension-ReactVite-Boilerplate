@@ -22,9 +22,9 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   if (request.action === "saveVisit" && isVisit(request.visit)) {
     queueHistoryUpdate(async () => {
       const result = await chrome.storage.local.get({ [HISTORY_KEY]: [] });
-        const visits = Array.isArray(result[HISTORY_KEY])
-          ? result[HISTORY_KEY].filter(isVisit)
-          : [];
+      const visits = Array.isArray(result[HISTORY_KEY])
+        ? result[HISTORY_KEY].filter(isVisit)
+        : [];
       await chrome.storage.local.set({
         [HISTORY_KEY]: [request.visit, ...visits].slice(0, MAX_VISITS),
       });
